@@ -7,6 +7,9 @@ Cattle Cycle Tracking to Facilitate Data-Informed Herd Decision Making
 - State beef extension specialists (e.g., at a land-grant university extension service) who advise **cow-calf producers** on herd expansion decisions. The product tracks the U.S. beef cattle cycle (inventory, prices, slaughter) using USDA NASS data in BigQuery.
 - Each fall and winter, ranchers ask, “Should I hold on to heifers to grow my herd, or sell them?” The specialist has to answer with evidence about where the state and the country are in the cattle cycle.
 
+- Why a data product helps:
+   - The evidence exists in NASS Quick Stats but is split across hundreds of series names, reference dates and geography levels. A dashboard puts inventory, heifer retention and prices on one timeline by state.
+
 ## 3. Proposed Analytical Product & Questions
 Consumption artifact: An interactive dashboard that shows where the nation-wide, or a selected state's cattle herd sits in the cattle cycle. It would place the annual beef cow inventory and cattle prices on one timeline, with comparisons to the national total and other selectable states.
 Questions: 
@@ -73,7 +76,9 @@ See [sql/00_feasibility.sql](sql/00_feasibility.sql) for queries
    - The dataset description reads “Data Updated On: 2023-03-18”, and the latest inventory year is 2022. In response, specifically to the question "Where is the cycle now?", I would clearly label "as of 2022" in the data product so that users don't take the data/information as current.
 -Risk 2: - Risk 2: Selecting the right series and grain
    - Each measure is stored as text in `short_desc` (187 cattle series), with 84 reference periods, SURVEY and CENSUS rows mixed together, and every column (including `value`) stored as a string. Mixing these could double count or combine values that don't belong together. In response I will filter each measure down to exactly one row per state per year, then double check that the filter worked. If I cannot, then I will use the national average instead. 
- 
+
+- Fallback: Narrow the product to beef cow and replacement-heifer inventory for one selected state and its neighbors (heifer series verified for Jan 1, 1920–2022, 50 states), using national prices only as context.
+
 ## 8. First P1 decision
 The first issues I plan to resolve in P1 is identifying the correct grain, and similarly verifying that I can convert string series into numeric values. 
 
