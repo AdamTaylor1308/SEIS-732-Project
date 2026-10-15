@@ -74,7 +74,7 @@ See [sql/00_feasibility.sql](sql/00_feasibility.sql) for queries
 ## 7. Feasibility risks and responses
 - Risk 1: Static data
    - The dataset description reads “Data Updated On: 2023-03-18”, and the latest inventory year is 2022. In response, specifically to the question "Where is the cycle now?", I would clearly label "as of 2022" in the data product so that users don't take the data/information as current.
--Risk 2: - Risk 2: Selecting the right series and grain
+- Risk 2: Selecting the right series and grain
    - Each measure is stored as text in `short_desc` (187 cattle series), with 84 reference periods, SURVEY and CENSUS rows mixed together, and every column (including `value`) stored as a string. Mixing these could double count or combine values that don't belong together. In response I will filter each measure down to exactly one row per state per year, then double check that the filter worked. If I cannot, then I will use the national average instead. 
 
 - Fallback: Narrow the product to beef cow and replacement-heifer inventory for one selected state and its neighbors (heifer series verified for Jan 1, 1920–2022, 50 states), using national prices only as context.
