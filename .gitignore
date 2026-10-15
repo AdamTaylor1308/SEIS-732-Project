@@ -3,6 +3,14 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Data extracts and credentials
+*.csv
+*.parquet
+*.xlsx
+data/
+*credentials*.json
+*service-account*.json
+
 # C extensions
 *.so
 
