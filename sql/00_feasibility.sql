@@ -49,3 +49,21 @@ SELECT
     COUNT(DISTINCT source_desc) AS sources
 FROM `bigquery-public-data.usda_nass_agriculture.animals_products`
 WHERE commodity_desc = 'CATTLE' AND agg_level_desc = 'STATE';
+
+-- 6. Scale: total table row count and cattle row count.
+SELECT
+    COUNT(*) AS total_rows,
+    COUNTIF(commodity_desc = 'CATTLE') AS cattle_rows
+FROM `bigquery-public-data.usda_nass_agriculture.animals_products`;
+
+
+-- 7. Heifer series check: which heifer series exist at state level, for which reference periods, years, and how many states (supports Q2).
+SELECT short_desc, reference_period_desc,
+       MIN(SAFE_CAST(year AS INT64)) AS first_year,
+       MAX(SAFE_CAST(year AS INT64)) AS last_year,
+       COUNT(DISTINCT state_alpha) AS states
+FROM `bigquery-public-data.usda_nass_agriculture.animals_products`
+WHERE commodity_desc = 'CATTLE' AND agg_level_desc = 'STATE'
+  AND short_desc LIKE '%HEIFERS%'
+GROUP BY 1, 2
+ORDER BY 1, 2;
