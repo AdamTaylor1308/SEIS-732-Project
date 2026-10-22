@@ -68,7 +68,7 @@ evidence/
 
 | Milestone | Tag / commit | Notes |
 |---|---|---|
-| P0 – Need, audience, dataset & feasibility | `p0-submission` <!-- TODO --> | |
+| P0 – Need, audience, dataset & feasibility | p0-submission | complete 10/14 |
 | P1 | | |
 | P2 | | |
 | P3 | | |
