@@ -12,7 +12,7 @@ Beef cattle numbers rise and fall in a cycle of roughly 8–12 years:
 - When prices are low, ranchers sell off cows and the herd shrinks. That eventually tightens supply, prices rise again, and the cycle repeats.
 ---
 
-## P0 files
+## P1 files
 
 | File | What it contains |
 |---|---|
@@ -20,7 +20,7 @@ Beef cattle numbers rise and fall in a cycle of roughly 8–12 years:
 | [docs/model.png](model.png) | Planned model of the data warehouse |
 | [sql/01_source_profile.sql](sql/01_source_profile.sql) |  |
 
-## P1 files
+## P0 files
 
 | File | What it contains |
 |---|---|
