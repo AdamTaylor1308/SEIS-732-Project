@@ -16,6 +16,14 @@ Beef cattle numbers rise and fall in a cycle of roughly 8–12 years:
 
 | File | What it contains |
 |---|---|
+| [docs/p1_plan.md](docs/p1_plan.md) |  |
+| [docs/model.png](model.png) | Planned model of the data warehouse |
+| [sql/01_source_profile.sql](sql/01_source_profile.sql) |  |
+
+## P1 files
+
+| File | What it contains |
+|---|---|
 | [docs/p0-feasibility.md](docs/p0-feasibility.md) | Audience, questions, source, profile, need-to-source fit, risks, first P1 decision, AI/tool use |
 | [sql/00_feasibility.sql](sql/00_feasibility.sql) | Reproducible schema, row-count, coverage and data-quality queries |
 | [evidence/p0-feasibility-results.md](evidence/p0-feasibility-results.md) | Summarized results of those queries (counts, ranges, constraints only, no source rows) |
