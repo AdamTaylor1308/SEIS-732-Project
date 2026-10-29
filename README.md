@@ -82,7 +82,7 @@ sql/
 | Milestone | Tag / commit | Notes |
 |---|---|---|
 | P0 – Need, audience, dataset & feasibility | p0-submission | complete 10/14 |
-| P1 | | |
+| P1 - Grain, Model, History & Pipeline Plan | p1-submission | complete 10/28 |
 | P2 | | |
 | P3 | | |
 | P4 | | |
