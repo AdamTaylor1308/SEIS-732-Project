@@ -295,3 +295,18 @@ WHERE commodity_desc = 'CATTLE'
   AND domaincat_desc = 'NOT SPECIFIED'
 GROUP BY 1, 2, 3
 ORDER BY is_annual DESC, last_year DESC, states DESC;
+
+-- 13. National annual cattle price series that run to 2022 
+SELECT short_desc, reference_period_desc,
+       MIN(SAFE_CAST(year AS INT64)) AS first_year,
+       MAX(SAFE_CAST(year AS INT64)) AS last_year,
+       COUNT(*) AS n
+FROM `bigquery-public-data.usda_nass_agriculture.animals_products`
+WHERE commodity_desc = 'CATTLE'
+  AND statisticcat_desc = 'PRICE RECEIVED'
+  AND agg_level_desc = 'NATIONAL'
+  AND source_desc = 'SURVEY'
+  AND domaincat_desc = 'NOT SPECIFIED'
+  AND freq_desc = 'ANNUAL'
+GROUP BY 1, 2
+ORDER BY last_year DESC, short_desc;
