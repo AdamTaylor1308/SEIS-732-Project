@@ -19,7 +19,7 @@ Beef cattle numbers rise and fall in a cycle of roughly 8–12 years:
 | File | What it contains |
 |---|---|
 | [docs/p1_plan.md](docs/p1_plan.md) | Question, source check and grain test, model and history plan, build plan with checks, change memo |
-| [docs/model.md](model.md) | Planned dimensional model of the data warehouse using Mermaid |
+| [docs/model.md](docs/model.md) | Planned dimensional model of the data warehouse using Mermaid |
 | [sql/01_source_profile.sql](sql/01_source_profile.sql) | Reproducible grain, coverage, revision, lead-lag and price-series queries (1–13) |
 
 ## P0 files
