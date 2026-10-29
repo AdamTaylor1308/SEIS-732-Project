@@ -63,10 +63,11 @@ README.md
 .gitignore
 docs/
   p0-feasibility.md
+  p1-plan.md
+  model.md
 sql/
   00_feasibility.sql
-evidence/
-  p0-feasibility-results.md
+  01_source_profile.sql
 ```
 
 ## Data handling
