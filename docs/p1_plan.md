@@ -177,6 +177,7 @@ The traced field is public, aggregate USDA NASS data released under CC0, with no
 - **First P2 step:** Create `raw.nass_cattle_jan1` in the course project using the Query 2 filters, and confirm it holds 10,143 rows.
 
 ## 4. Diagnose and revise the plan
+ - Meeting with Brian during class helped me to understand which primary question I want to dig into with this dataset, which is the primary question chosen in this P1 submission. The topic of wrangling the complex raw data came up, as this dataset is not particularly clean, which prompted me to going with a question that presumably would be more direct and allow me to filter out all the noise. Brian noted that the multitude of descriptions (0-50 head, 50-200 head, etc. / slaughter, dairy, beef, etc.) might make the data hard to work with, and thought it would be easier to handle data pertaining to a select few descriptors: (`repl_heifers` & `beef_cows` were chosen). I'm still uncertain of whether or not this dataset will be able to provide meaningful results given it's limited range (4 year gap between present and latest data). 
 
 ### AI/tool accountability
 - I used Claude to draft profiling queries 1–13, formatting the markdown documents, and help with interpreting results due to the nature of the raw dataset. I also prompted Claude to provide the Mermaid code necessary to make the model 
