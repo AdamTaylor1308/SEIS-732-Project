@@ -65,6 +65,8 @@ docs/
   p0-feasibility.md
   p1-plan.md
   model.md
+evidence/
+  p0-feasibiliity-results.md
 sql/
   00_feasibility.sql
   01_source_profile.sql
