@@ -1,4 +1,5 @@
-# Cattle Cycle Review
+# A Cattle Cycle Review
+U.S. and Minnesota beef cattle inventory, 1920–2022 (USDA NASS data as of Jan 1, 2022)
 **Author:** Adam Taylor  ·  **Course:** SEIS 732 Data Warehousing  ·  **Status:** P0 – Feasibility
 ---
 
