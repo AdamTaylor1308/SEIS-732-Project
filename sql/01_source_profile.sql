@@ -13,7 +13,7 @@ GROUP BY 1, 2, 3, 4, 5
 ORDER BY 1, 2, 3, 4, 5;
 
 
--- 2. Grain test: one row per geographic location, cattle class, year within the fact scope.
+-- 2. Grain test: one row per geography + cattle class + year within the fact scope.
 --    Expected: 0 rows with a missing key part, 0 repeated groups, max_rows_per_key = 1.
 WITH scope AS (
   SELECT *
@@ -210,3 +210,88 @@ WHERE x.state_alpha != 'MN'
 GROUP BY 1, 2
 HAVING n_years >= 30
 ORDER BY lead_years, r_all DESC;
+
+
+-- 9. Which state-years have beef cows but no replacement heifers (109 in query 5)?
+--    Summarized by state so the gap can be explained (early years, small states, or both).
+WITH pairs AS (
+  SELECT state_alpha, SAFE_CAST(year AS INT64) AS yr,
+         COUNTIF(short_desc = 'CATTLE, COWS, BEEF - INVENTORY') AS cow_rows,
+         COUNTIF(short_desc = 'CATTLE, HEIFERS, GE 500 LBS, BEEF REPLACEMENT - INVENTORY') AS heifer_rows
+  FROM `bigquery-public-data.usda_nass_agriculture.animals_products`
+  WHERE commodity_desc = 'CATTLE'
+    AND short_desc IN ('CATTLE, COWS, BEEF - INVENTORY',
+                       'CATTLE, HEIFERS, GE 500 LBS, BEEF REPLACEMENT - INVENTORY')
+    AND reference_period_desc = 'FIRST OF JAN'
+    AND source_desc = 'SURVEY'
+    AND domaincat_desc = 'NOT SPECIFIED'
+    AND agg_level_desc = 'STATE'
+  GROUP BY 1, 2
+)
+SELECT state_alpha,
+       COUNT(*) AS cows_only_years,
+       MIN(yr) AS first_gap_year,
+       MAX(yr) AS last_gap_year
+FROM pairs
+WHERE cow_rows > 0 AND heifer_rows = 0
+GROUP BY 1
+ORDER BY cows_only_years DESC;
+
+
+-- 10. Sub-annual discovery: which state-level cattle series are published more than once a year,
+--     still run to 2015 or later, and include Minnesota? Needed for 6-18 month lead times.
+SELECT short_desc, freq_desc,
+       COUNT(DISTINCT reference_period_desc) AS periods_per_year,
+       MIN(SAFE_CAST(year AS INT64)) AS first_year,
+       MAX(SAFE_CAST(year AS INT64)) AS last_year,
+       COUNT(DISTINCT state_alpha) AS states,
+       LOGICAL_OR(state_alpha = 'MN') AS has_mn,
+       COUNT(*) AS n
+FROM `bigquery-public-data.usda_nass_agriculture.animals_products`
+WHERE commodity_desc = 'CATTLE'
+  AND agg_level_desc = 'STATE'
+  AND source_desc = 'SURVEY'
+  AND domaincat_desc = 'NOT SPECIFIED'
+GROUP BY 1, 2
+HAVING periods_per_year >= 2 AND last_year >= 2015
+ORDER BY has_mn DESC, states DESC, n DESC;
+
+
+-- 11. Semi-annual option: Jan 1 + Jul 1 beef cow inventory by state.
+--     Which states (incl. MN) have both, and for which years? Jul 1 state data ends in 2004.
+SELECT state_alpha,
+       COUNTIF(reference_period_desc = 'FIRST OF JAN') AS jan_rows,
+       COUNTIF(reference_period_desc = 'FIRST OF JUL') AS jul_rows,
+       MIN(IF(reference_period_desc = 'FIRST OF JUL', SAFE_CAST(year AS INT64), NULL)) AS jul_first_year,
+       MAX(IF(reference_period_desc = 'FIRST OF JUL', SAFE_CAST(year AS INT64), NULL)) AS jul_last_year
+FROM `bigquery-public-data.usda_nass_agriculture.animals_products`
+WHERE commodity_desc = 'CATTLE'
+  AND short_desc = 'CATTLE, COWS, BEEF - INVENTORY'
+  AND reference_period_desc IN ('FIRST OF JAN', 'FIRST OF JUL')
+  AND source_desc = 'SURVEY'
+  AND domaincat_desc = 'NOT SPECIFIED'
+  AND agg_level_desc = 'STATE'
+GROUP BY 1
+HAVING jul_rows > 0
+ORDER BY state_alpha;
+
+
+-- 12. P0 feedback: find a state-level cattle PRICE RECEIVED series comparable to annual inventory.
+--     Looking for an ANNUAL (or MARKETING YEAR) series that runs to 2022, covers many states, and includes MN.
+--     Monthly series are listed too, since a monthly price could give a 6-18 month lead before Jan 1.
+SELECT short_desc, freq_desc, reference_period_desc = 'YEAR' OR reference_period_desc LIKE 'MARKETING YEAR%' AS is_annual,
+       MIN(SAFE_CAST(year AS INT64)) AS first_year,
+       MAX(SAFE_CAST(year AS INT64)) AS last_year,
+       COUNT(DISTINCT state_alpha) AS states,
+       COUNT(DISTINCT IF(SAFE_CAST(year AS INT64) >= 2015, state_alpha, NULL)) AS states_since_2015,
+       LOGICAL_OR(state_alpha = 'MN') AS has_mn,
+       MAX(IF(state_alpha = 'MN', SAFE_CAST(year AS INT64), NULL)) AS mn_last_year,
+       COUNT(*) AS n
+FROM `bigquery-public-data.usda_nass_agriculture.animals_products`
+WHERE commodity_desc = 'CATTLE'
+  AND statisticcat_desc = 'PRICE RECEIVED'
+  AND agg_level_desc = 'STATE'
+  AND source_desc = 'SURVEY'
+  AND domaincat_desc = 'NOT SPECIFIED'
+GROUP BY 1, 2, 3
+ORDER BY is_annual DESC, last_year DESC, states DESC;
