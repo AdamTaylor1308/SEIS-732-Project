@@ -34,12 +34,12 @@ erDiagram
         INT64 year
     }
     MART_MN_LEAD_LAG {
-        INT64 leader_stat
+        INT64 leader_state_key FK
         INT64 reference_state_key FK "Minnesota"
-        INT64 lead_years
+        INT64 lead_years "k = 0 to 3"
         INT64 n_years
         FLOAT64 r_all
         FLOAT64 r_early_to_1990
-        FLOAT64 r_late_af
+        FLOAT64 r_late_after_1990
     }
 ```
