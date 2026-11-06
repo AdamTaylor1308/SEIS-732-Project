@@ -1,7 +1,7 @@
 # A Cattle Cycle Review
 U.S. and Minnesota beef cattle inventory, 1920–2022 (USDA NASS data as of Jan 1, 2022)
 ---
-**Author:** Adam Taylor  ·  **Course:** SEIS 732 Data Warehousing  ·  **Status:** P0 – Feasibility
+**Author:** Adam Taylor  ·  **Course:** SEIS 732 Data Warehousing  ·  **Status:** P2 – Working Ingestion, Curation & Acceptance Checks
 ---
 
 ## Purpose
@@ -13,6 +13,14 @@ Beef cattle numbers rise and fall in a cycle of roughly 8–12 years:
 - A heifer takes about 2 years to produce a calf, and that calf takes another 1–2 years to reach market. So extra supply arrives years later, and prices drop.
 - When prices are low, ranchers sell off cows and the herd shrinks. That eventually tightens supply, prices rise again, and the cycle repeats.
 ---
+## P2 files
+
+| File | What it contains |
+|---|---|
+| [docs/p2-build.md](docs/p2-build.md) | Build explanation, run order, check results, and field trace |
+| [sql/02-ingest.sql](sql/02-ingest.sql) | Source-to-Raw step, when SQL performs that step |
+| [sql/03-curate.sql](sql/03-curate.sql) | Curated transformations |
+| [sql/04-acceptance.sql](sql/04-acceptance.sql) | Executable checks |
 
 ## P1 files
 
@@ -64,12 +72,16 @@ README.md
 docs/
   p0-feasibility.md
   p1-plan.md
+  p2-build.md
   model.md
 evidence/
   p0-feasibiliity-results.md
 sql/
   00_feasibility.sql
   01_source_profile.sql
+  02-ingest.sql
+  03_curate.sql
+  04-acceptance.sql
 ```
 
 ## Data handling
@@ -83,6 +95,6 @@ sql/
 |---|---|---|
 | P0 – Need, audience, dataset & feasibility | p0-submission | complete 10/14 |
 | P1 - Grain, Model, History & Pipeline Plan | p1-submission | complete 10/28 |
-| P2 | | |
+| P2 - Working Ingestion, Curation & Acceptance Checks| p2-submission | |
 | P3 | | |
 | P4 | | |
