@@ -5,7 +5,7 @@ U.S. and Minnesota beef cattle inventory, 1920–2022 (USDA NASS data as of Jan 
 ---
 
 ## Purpose
-This repository currently contains the **P0 feasibility check**. It covers who the product is for, the questions it should answer, the source dataset, and the small reproducible queries used to confirm that the source can support those questions.
+This repository currently contains the **P2 Working Ingestion, Curation & Acceptance Checks**. This step outlines the pipeline of source to raw, raw to curated, and curated to an executable table. The build explanation, run order and check results are included in the **p2-build.md**. 
 
 ## The Cattle Cycle
 Beef cattle numbers rise and fall in a cycle of roughly 8–12 years:
@@ -39,10 +39,10 @@ Beef cattle numbers rise and fall in a cycle of roughly 8–12 years:
 | [evidence/p0-feasibility-results.md](evidence/p0-feasibility-results.md) | Summarized results of those queries (counts, ranges, constraints only, no source rows) |
 
 ## Audience
-State beef extension specialists (e.g., at a land-grant university extension service) who advise **cow-calf producers** on herd expansion decisions. The product tracks the U.S. beef cattle cycle (inventory, prices, slaughter) using USDA NASS data in BigQuery.
+Minnesota **ranchers/cow-calf producers** who are looking for insight into the cattle cycle to make herd expansion or reduction decisions. The product tracks the U.S. beef cattle cycle (inventory, prices, slaughter) using USDA NASS data in BigQuery.
 
 ## Need
-Each fall and winter, ranchers ask, “Should I hold on to heifers to grow my herd, or sell them?” The specialist has to answer with evidence about where the state and the country are in the cattle cycle.
+Each fall and winter, ranchers ask, “Should I hold on to heifers to grow my herd, or sell them?” Evidence about where Minnesota is at in the cycle compared to other states across the US could support better decision making.
 
 ## Data source
 
@@ -71,11 +71,11 @@ README.md
 .gitignore
 docs/
   p0-feasibility.md
-  p1-plan.md
+  p1_plan.md
   p2-build.md
   model.md
 evidence/
-  p0-feasibiliity-results.md
+  p0-feasibility-results.md
 sql/
   00_feasibility.sql
   01_source_profile.sql
