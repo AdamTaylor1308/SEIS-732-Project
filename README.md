@@ -80,7 +80,7 @@ sql/
   00_feasibility.sql
   01_source_profile.sql
   02-ingest.sql
-  03_curate.sql
+  03-curate.sql
   04-acceptance.sql
 ```
 
@@ -95,6 +95,6 @@ sql/
 |---|---|---|
 | P0 – Need, audience, dataset & feasibility | p0-submission | complete 10/14 |
 | P1 - Grain, Model, History & Pipeline Plan | p1-submission | complete 10/28 |
-| P2 - Working Ingestion, Curation & Acceptance Checks| p2-submission | |
+| P2 - Working Ingestion, Curation & Acceptance Checks| p2-submission | complete 11/20 |
 | P3 | | |
 | P4 | | |
